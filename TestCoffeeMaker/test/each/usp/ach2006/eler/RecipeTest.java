@@ -1,11 +1,14 @@
 package each.usp.ach2006.eler;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
 import each.usp.ach2006.adaptedfromcsc326.eler.CoffeeMaker;
 import each.usp.ach2006.adaptedfromcsc326.eler.Recipe;
+import each.usp.ach2006.adaptedfromcsc326.eler.exceptions.AmountOfRecipeException;
+import each.usp.ach2006.adaptedfromcsc326.eler.exceptions.DuplicatedRecipeException;
 import each.usp.ach2006.adaptedfromcsc326.eler.exceptions.InsufficientAmountOfMoneyException;
 import each.usp.ach2006.adaptedfromcsc326.eler.exceptions.InvalidValueException;
 import each.usp.ach2006.adaptedfromcsc326.eler.exceptions.InventoryException;
@@ -46,6 +49,33 @@ public class RecipeTest{
 	@Test
 	public void testValidPrice() throws InvalidValueException {
 		Recipe recipe = new Recipe(name, 1, amtCoffee, amtMilk, amtSugar, amtChocolate);
+	}
+	
+	/**
+	 * Testa criar uma receita sem nome
+	 */
+	@Test(expected = InvalidValueException.class)
+	public void testAddOneRecipeUnnamed() throws InvalidValueException {
+		Recipe recipe = new Recipe("", price, amtCoffee, amtMilk, amtSugar, amtChocolate);
+		
+	}
+	
+	/**
+	 * Testa criar uma receita sem ingredientes
+	 */
+	@Test(expected = InvalidValueException.class)
+	public void testAddRecipeWithoutItems() throws InvalidValueException {
+		Recipe recipe = new Recipe(name, 0, 0, 0, 0, 0);		
+	}
+	/**
+	 * Testa criar uma receita sem ingredientes
+	 */
+	//@Test(expected = InvalidValueException.class)
+	@Test
+	public void testRecipeWithOneitem() throws InvalidValueException {
+		Recipe recipe = new Recipe(name, price, 0, 0, 0, amtSugar);	
+		//each.usp.ach2006.adaptedfromcsc326.eler.exceptions.InvalidValueException: Units of sugar must be a positive integer
+		//at each.usp.ach2006.adaptedfromcsc326.eler.Recipe.setAmtSugar(Recipe.java:94)
 	}
 
 }
